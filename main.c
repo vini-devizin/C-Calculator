@@ -1,19 +1,19 @@
 #include <stdio.h>
 
-void sum(int a, int b) {
-  printf("Resultado: %d + %d = %d\n", a, b, a + b);
+void sum(double a, double b) {
+  printf("Resultado: %.2f + %.2f = %.2f\n", a, b, a + b);
 }
 
-void subtract(int a, int b) {
-  printf("Resultado: %d - %d = %d\n", a, b, a - b); 
+void subtract(double a, double b) {
+  printf("Resultado: %.2f - %.2f = %.2f\n", a, b, a - b); 
 }
 
-void multiply(int a, int b) {
-  printf("Resultado: %d * %d = %d\n", a, b, a * b);
+void multiply(double a, double b) {
+  printf("Resultado: %.2f * %.2f = %.2f\n", a, b, a * b);
 }
 
-void divide(int a, int b) {
-  printf("Resultado: %d / %d = %d\n", a, b, a / b);
+void divide(double a, double b) {
+  printf("Resultado: %.2f / %.2f = %.2f\n", a, b, a / b);
 }
 
 void clean_buffer() {
@@ -21,28 +21,29 @@ void clean_buffer() {
   while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void int_input(int situation, int *ptr) {
-  /*
-  situation == 0 -> menu input
-  situation == 1 -> numbers input
-  */
-  while (scanf("%d", ptr) != 1) {
-    if (situation == 0) {
-      printf("Opção inválida! Digite um número de 1 a 5\n");
-    } else {
-      printf("Entrada inválida! Digite um número\n");
-    }
+void int_input(int *ptr) {
+  while (scanf("%d", ptr) != 1) { 
+    printf("Opção inválida! Digite um número de 1 a 5\n");
     clean_buffer();
     printf("Digite novamente: ");
   }
   clean_buffer();
 }
 
-void values_input(int *a, int *b) {
+void decimal_input(double *ptr) {
+  while (scanf("%lf", ptr) != 1) {
+    printf("Entrada inválida! Digite um número\n");
+    clean_buffer();
+    printf("Digite novamente: ");
+  }
+  clean_buffer();
+}
+
+void values_input(double *a, double *b) {
   printf("Digite o primeiro número: ");
-  int_input(1, a);
+  decimal_input(a);
   printf("Digite o segundo número: ");
-  int_input(1, b);
+  decimal_input(b);
 }
 
 int continue_program(char *c) {
@@ -65,7 +66,7 @@ int continue_program(char *c) {
 }
 
 int main() {
-  int a, b;
+  double a, b;
   int opt = 0;
   char confirm;
   while (1) {
@@ -73,11 +74,11 @@ int main() {
     printf("   Calculadora Simples\n");
     printf("===============================\n");
     printf("Selecione uma operação:\n1. Adição\n2. Subtração\n3. Multiplicação\n4. Divisão\n5. Sair\nOpção: ");
-    int_input(0, &opt);
+    int_input(&opt);
     while (opt > 5 || opt < 1) {
       printf("Opção inválida! Digite um número de 1 a 5\n");
       printf("Digite novamente: ");
-      int_input(0, &opt);
+      int_input(&opt);
     } if (opt == 1) {
       values_input(&a, &b);
       sum(a, b);
